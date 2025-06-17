@@ -4,12 +4,15 @@ import { fetchPaket, deletePaket } from "./paketService";
 import PaketTable from "./PaketTable";
 import FormPaket from "./form";
 import Modal from "../Modal";
+import StatusEditForm from "./StatusEditForm";
 
 export default function PaketList() {
     const [paket, setPaket] = useState([]);
     const [loading, setLoading] = useState(true);
     const [modalOpen, setModalOpen] = useState(false);
     const [editData, setEditData] = useState(null);
+    const [statusModalOpen, setStatusModalOpen] = useState(false);
+    const [statusEditData, setStatusEditData] = useState(null);
 
     const loadPaket = async () => {
         try {
@@ -41,7 +44,7 @@ export default function PaketList() {
         if (confirm("Yakin ingin menghapus data ini?")) {
             try {
                 await deletePaket(id);
-                loadPaket(); // Refresh data
+                loadPaket();
             } catch (err) {
                 console.error("Gagal hapus data:", err);
                 alert("Gagal menghapus data");
@@ -52,7 +55,7 @@ export default function PaketList() {
     const handleFormSuccess = () => {
         setModalOpen(false);
         setEditData(null);
-        loadPaket(); // Refresh data
+        loadPaket();
     };
 
     const handleModalClose = () => {
@@ -60,6 +63,21 @@ export default function PaketList() {
         setEditData(null);
     };
 
+    const handleEditStatus = (item) => {
+        setStatusEditData(item);
+        setStatusModalOpen(true);
+    };
+
+    const handleStatusSuccess = () => {
+        setStatusModalOpen(false);
+        setStatusEditData(null);
+        loadPaket();
+    };
+
+    const handleStatusModalClose = () => {
+        setStatusModalOpen(false);
+        setStatusEditData(null);
+    };
     if (loading) {
         return (
             <div className="container mt-4">
@@ -89,6 +107,7 @@ export default function PaketList() {
                         data={paket}
                         onEdit={handleEdit}
                         onDelete={handleDelete}
+                        onEditStatus={handleEditStatus}
                     />
                 </div>
             </div>
@@ -103,6 +122,19 @@ export default function PaketList() {
                     initialData={editData}
                     onSuccess={handleFormSuccess}
                     onCancel={handleModalClose}
+                />
+            </Modal>
+
+            <Modal
+                isOpen={statusModalOpen}
+                onClose={handleStatusModalClose}
+                title="Edit Status Paket"
+                size="md"
+            >
+                <StatusEditForm
+                    initialData={statusEditData}
+                    onSuccess={handleStatusSuccess}
+                    onCancel={handleStatusModalClose}
                 />
             </Modal>
         </div>

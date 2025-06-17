@@ -11,6 +11,6 @@ export const createUsers = (data) => {
 export const updateUsers = (id, data) => {
     return api.put(`/user/${id}`, data);
 };
-export const dedleteUsers = (id) => {
-    return api.get(`/user/${id}`);
+export const deleteUsers = (id) => {
+    return api.delete(`/user/${id}`);
 };

@@ -1,7 +1,7 @@
 // resources/js/paket/PaketTable.jsx
 import React from "react";
 
-export default function PaketTable({ data, onEdit, onDelete }) {
+export default function PaketTable({ data, onEdit, onDelete, onEditStatus }) {
     const getStatusBadge = (status) => {
         const badges = {
             delivered: "bg-success",
@@ -65,6 +65,14 @@ export default function PaketTable({ data, onEdit, onDelete }) {
                                         >
                                             <i className="bi bi-pencil"></i>{" "}
                                             Edit
+                                        </button>
+                                        <button
+                                            onClick={() => onEditStatus(item)}
+                                            className="btn btn-sm btn-outline-warning"
+                                            title="Edit Status"
+                                        >
+                                            <i className="bi bi-arrow-repeat"></i>{" "}
+                                            Status
                                         </button>
                                         {onDelete && (
                                             <button

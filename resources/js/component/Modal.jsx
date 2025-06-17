@@ -12,7 +12,6 @@ export default function Modal({
 
     return (
         <>
-            {/* Bootstrap Modal */}
             <div className="modal show d-block" tabIndex="-1" role="dialog">
                 <div className={`modal-dialog modal-${size}`} role="document">
                     <div className="modal-content">

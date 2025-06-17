@@ -14,3 +14,5 @@ Route::delete('/paket/{id}', [PaketController::class, 'destroy']);
 
 Route::get('/user', [AuthController::class, 'index']);
 Route::post('/user', [AuthController::class, 'store']);
+Route::put('/user/{id}', [AuthController::class, 'update']);
+Route::delete('/user/{id}', [AuthController::class, 'destroy']);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FormUsers from "./form";
 import Modal from "../Modal";
-import { fetchUsers, dedleteUsers } from "./authService";
+import { fetchUsers, deleteUsers } from "./authService";
 import UsersTable from "./UsersTable";
 
 export const AuthList = () => {
@@ -39,7 +39,7 @@ export const AuthList = () => {
     const handleDelete = async (id) => {
         if (confirm("Yakin ingin menghapus data ini?")) {
             try {
-                await dedleteUsers(id);
+                await deleteUsers(id);
                 loadUsers();
             } catch (err) {
                 console.error("Gagal hapus data:", err);

@@ -14,7 +14,8 @@ export default function FormUsers({ initialData, onSuccess, onCancel }) {
 
     useEffect(() => {
         if (initialData) {
-            setForm(initialData);
+            const { password, ...dataWithoutPassword } = initialData;
+            setForm(dataWithoutPassword);
         }
     }, [initialData]);
 
@@ -28,7 +29,8 @@ export default function FormUsers({ initialData, onSuccess, onCancel }) {
 
         try {
             if (initialData?.id) {
-                await updateUsers(initialData.id, form);
+                const { password, ...formWithoutPassword } = form;
+                await updateUsers(initialData.id, formWithoutPassword);
             } else {
                 await createUsers(form);
             }
@@ -82,19 +84,21 @@ export default function FormUsers({ initialData, onSuccess, onCancel }) {
             </div>
 
             <div className="row">
-                <div className="col-md-6 mb-3">
-                    <label className="form-label">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={form.password}
-                        onChange={handleChange}
-                        className="form-control"
-                        placeholder="Masukkan password"
-                        maxLength={100}
-                        required
-                    />
-                </div>
+                {!initialData && (
+                    <div className="col-md-6 mb-3">
+                        <label className="form-label">Password</label>
+                        <input
+                            type="password"
+                            name="password"
+                            value={form.password}
+                            onChange={handleChange}
+                            className="form-control"
+                            placeholder="Masukkan password"
+                            maxLength={100}
+                            required
+                        />
+                    </div>
+                )}
 
                 <div className="col-md-6 mb-3">
                     <label className="form-label">No HP</label>
