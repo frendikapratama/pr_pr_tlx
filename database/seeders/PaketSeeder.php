@@ -15,7 +15,7 @@ class PaketSeeder extends Seeder
   public function run(): void
     {
         Paket::create([
-            'id' => Str::uuid(), 
+
             'nama_paket' => 'Paket A',
             'no_resi' => time() . strtoupper(Str::random(5)),
             'alamat_penerima' => 'Jl. Merdeka No.1',

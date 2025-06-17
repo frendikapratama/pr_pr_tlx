@@ -1,30 +1,29 @@
-// resources/js/paket/PaketList.jsx
 import React, { useEffect, useState } from "react";
-import { fetchPaket, deletePaket } from "./paketService";
-import PaketTable from "./PaketTable";
-import FormPaket from "./form";
+import FormUsers from "./form";
 import Modal from "../Modal";
+import { fetchUsers, dedleteUsers } from "./authService";
+import UsersTable from "./UsersTable";
 
-export default function PaketList() {
-    const [paket, setPaket] = useState([]);
+export const AuthList = () => {
+    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [modalOpen, setModalOpen] = useState(false);
     const [editData, setEditData] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
 
-    const loadPaket = async () => {
+    const loadUsers = async () => {
         try {
             setLoading(true);
-            const res = await fetchPaket();
-            setPaket(res.data);
-        } catch (error) {
-            console.error("Gagal fetch data:", error);
+            const res = await fetchUsers();
+            setUsers(res.data);
+        } catch (err) {
+            console.error("Gagal fetch data:", err);
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        loadPaket();
+        loadUsers();
     }, []);
 
     const handleAdd = () => {
@@ -40,8 +39,8 @@ export default function PaketList() {
     const handleDelete = async (id) => {
         if (confirm("Yakin ingin menghapus data ini?")) {
             try {
-                await deletePaket(id);
-                loadPaket(); // Refresh data
+                await dedleteUsers(id);
+                loadUsers();
             } catch (err) {
                 console.error("Gagal hapus data:", err);
                 alert("Gagal menghapus data");
@@ -52,7 +51,7 @@ export default function PaketList() {
     const handleFormSuccess = () => {
         setModalOpen(false);
         setEditData(null);
-        loadPaket(); // Refresh data
+        loadUsers();
     };
 
     const handleModalClose = () => {
@@ -71,35 +70,33 @@ export default function PaketList() {
             </div>
         );
     }
-
     return (
         <div className="container-fluid mt-4">
             <div className="card">
                 <div className="card-header d-flex justify-content-between align-items-center">
                     <h2 className="card-title mb-0">
-                        <i className="bi bi-box-seam"></i> Daftar Paket
+                        <i className="bi bi-box-seam"></i> Daftar users
                     </h2>
                     <button onClick={handleAdd} className="btn btn-success">
-                        <i className="bi bi-plus-circle"></i> Tambah Paket
+                        <i className="bi bi-plus-circle"></i> Tambah User
                     </button>
                 </div>
 
                 <div className="card-body">
-                    <PaketTable
-                        data={paket}
+                    <UsersTable
+                        data={users}
                         onEdit={handleEdit}
                         onDelete={handleDelete}
                     />
                 </div>
             </div>
-
             <Modal
                 isOpen={modalOpen}
                 onClose={handleModalClose}
-                title={editData ? "Edit Paket" : "Tambah Paket"}
+                title={editData ? "Edit User" : "Tambah User"}
                 size="xl"
             >
-                <FormPaket
+                <FormUsers
                     initialData={editData}
                     onSuccess={handleFormSuccess}
                     onCancel={handleModalClose}
@@ -107,4 +104,4 @@ export default function PaketList() {
             </Modal>
         </div>
     );
-}
+};

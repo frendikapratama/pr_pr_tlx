@@ -12,7 +12,7 @@ return new class extends Migration
    public function up(): void
     {
         Schema::create('paket', function (Blueprint $table) {
-            $table->uuid('id')->primary(); 
+            $table->id(); 
             $table->string('nama_paket');
             $table->string('no_resi')->unique();
             $table->string('alamat_penerima');
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('no_hp_penerima');
             $table->string('nama_pengirim');
             $table->string('no_hp_pengirim');
-            $table->enum('status', ['diproses', 'dikirim', 'diterima'])->default('diproses');
+            $table->enum('status', ['proses', 'dikirim', 'diterima', 'dibatalkan'])->default('proses');
             $table->timestamps();
         });
     }

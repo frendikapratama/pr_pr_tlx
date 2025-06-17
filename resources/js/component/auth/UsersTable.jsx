@@ -1,31 +1,14 @@
-// resources/js/paket/PaketTable.jsx
-import React from "react";
-
-export default function PaketTable({ data, onEdit, onDelete }) {
-    const getStatusBadge = (status) => {
-        const badges = {
-            delivered: "bg-success",
-            in_transit: "bg-warning",
-            pending: "bg-secondary",
-            cancelled: "bg-danger",
-        };
-        return badges[status] || "bg-secondary";
-    };
-
+export default function UsersTable({ data, onEdit, onDelete }) {
     return (
         <div className="table-responsive">
             <table className="table table-striped table-hover">
                 <thead className="table-dark">
                     <tr>
                         <th>No</th>
-                        <th>Nama Paket</th>
-                        <th>No Resi</th>
-                        <th>Nama Penerima</th>
-                        <th>No HP Penerima</th>
-                        <th>Alamat Penerima</th>
-                        <th>Nama Pengirim</th>
-                        <th>No HP Pengirim</th>
-                        <th>Status</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>No Telpon</th>
+                        <th>Role</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -40,22 +23,11 @@ export default function PaketTable({ data, onEdit, onDelete }) {
                         data.map((item, index) => (
                             <tr key={item.id}>
                                 <td>{index + 1}</td>
-                                <td>{item.nama_paket}</td>
-                                <td>{item.no_resi}</td>
-                                <td>{item.nama_penerima}</td>
-                                <td>{item.no_hp_penerima}</td>
-                                <td>{item.alamat_penerima}</td>
-                                <td>{item.nama_pengirim}</td>
-                                <td>{item.no_hp_pengirim}</td>
-                                <td>
-                                    <span
-                                        className={`badge ${getStatusBadge(
-                                            item.status
-                                        )}`}
-                                    >
-                                        {item.status}
-                                    </span>
-                                </td>
+                                <td>{item.fullname}</td>
+                                <td>{item.email}</td>
+                                <td>{item.no_telpon}</td>
+                                <td>{item.role}</td>
+
                                 <td>
                                     <div className="btn-group" role="group">
                                         <button
