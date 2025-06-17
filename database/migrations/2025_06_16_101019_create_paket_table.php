@@ -9,14 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+   public function up(): void
     {
-      Schema::create('paket', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_pengirim');
-            $table->string('nama_penerima');
+        Schema::create('paket', function (Blueprint $table) {
+            $table->id(); 
+            $table->string('nama_paket');
+            $table->string('no_resi')->unique();
             $table->string('alamat_penerima');
-            $table->string('status')->default('diproses');
+            $table->string('nama_penerima');
+            $table->string('no_hp_penerima');
+            $table->string('nama_pengirim');
+            $table->string('no_hp_pengirim');
+            $table->enum('status', ['proses', 'dikirim', 'diterima', 'dibatalkan'])->default('proses');
             $table->timestamps();
         });
     }

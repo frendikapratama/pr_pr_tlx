@@ -4,31 +4,26 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Paket;
+use Illuminate\Support\Str;
+
 class PaketSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run(): void
+  public function run(): void
     {
-   DB::table('paket')->insert([
-            [
-                'nama_pengirim' => 'Andi',
-                'nama_penerima' => 'Budi',
-                'alamat_penerima' => 'Jl. Merdeka No.1',
-                'status' => 'diproses',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_pengirim' => 'Sinta',
-                'nama_penerima' => 'Rina',
-                'alamat_penerima' => 'Jl. Kemerdekaan No.2',
-                'status' => 'dikirim',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        Paket::create([
+
+            'nama_paket' => 'Paket A',
+            'no_resi' => time() . strtoupper(Str::random(5)),
+            'alamat_penerima' => 'Jl. Merdeka No.1',
+            'nama_penerima' => 'Budi',
+            'no_hp_penerima' => '081234567890',
+            'nama_pengirim' => 'Andi',
+            'no_hp_pengirim' => '089876543210',
+            'status' => 'diproses',
         ]);
     }
 }
