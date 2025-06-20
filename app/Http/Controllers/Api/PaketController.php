@@ -10,15 +10,36 @@ use Illuminate\Support\Facades\Validator;
 
 class PaketController extends Controller
 {
+    public function __construct()
+{
+    $this->middleware('auth:sanctum');
+}
+
+
     public function index()
     {
-      return response()->json(
-        Paket::orderBy('created_at', 'desc')->get()
-    );
+        $user = auth()->user();
+        if (!$user->isAdmin()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Forbidden',
+                ], 403);
+            }
+        return response()->json(
+            Paket::orderBy('created_at', 'desc')->get()
+        );
     }
 
     public function store(Request $request)
     {
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Forbidden',
+            ], 403);
+        }
         $validator = Validator::make($request->all(), [
             'nama_paket'     => 'required|string|max:100',
             'nama_pengirim'    => 'required|string|max:100',
@@ -55,6 +76,14 @@ class PaketController extends Controller
 
     public function update(Request $request, $id)
     {
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Forbidden',
+            ], 403);
+        }
         $paket = Paket::find($id);
 
         if (!$paket) {
@@ -94,6 +123,14 @@ class PaketController extends Controller
 
     public function destroy($id)
     {
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Forbidden',
+            ], 403);
+        }
         $paket = Paket::find($id);
 
         if (!$paket) {

@@ -7,19 +7,64 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
- public function index()
+    public function __construct()
     {
-      return response()->json(
-        User::orderBy('created_at', 'desc')->get()
-    );
+        $this->middleware('auth:sanctum')->except(['login']);
     }
+    
+    public function login(Request $request)
+        {
+            $credentials = $request->validate([
+                'email' => ['required', 'email'],
+                'password' => ['required'],
+            ]);
+
+            if (!Auth::attempt($credentials)) {
+                return response()->json(['message' => 'Invalid credentials'], 401);
+            }
+
+            $user = Auth::user(); 
+            $token = $user->createToken('api_token')->plainTextToken;
+
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+                'user' => $user,
+            ]);
+        }
+
+    public function index()
+    {
+        $user = auth()->user();
+
+        if (!$user->isAdmin()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Forbidden',
+            ], 403);
+        }
+
+        return response()->json(
+            User::orderBy('created_at', 'desc')->get()
+        );
+    }
+
 
     public function store(Request $request)
     {
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Forbidden',
+            ], 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'fullname'   => 'required|string|max:100',
             'email'      => 'required|email|unique:users,email',
@@ -111,6 +156,15 @@ class AuthController extends Controller
 
     public function destroy($id)
     {
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Forbidden',
+            ], 403);
+        }
+
         $user = User::find($id);
 
         if (!$user) {

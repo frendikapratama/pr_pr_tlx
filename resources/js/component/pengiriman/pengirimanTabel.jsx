@@ -1,22 +1,20 @@
-// resources/js/paket/PaketTable.jsx
 import React from "react";
 
-export default function PaketTable({ data, onEdit, onDelete }) {
+function PengirimanTable({ data, onEdit, onDelete, onEditStatus }) {
     return (
         <div className="table-responsive">
             <table className="table table-striped table-hover">
                 <thead className="table-dark">
                     <tr>
                         <th>No</th>
-                        <th>Nama Paket</th>
-                        <th>No Resi</th>
-                        <th>Nama Penerima</th>
-                        <th>No HP Penerima</th>
-                        <th>Alamat Penerima</th>
                         <th>Nama Pengirim</th>
-                        <th>No HP Pengirim</th>
+                        <th>No Resi</th>
+                        <th>Alamat Penerima</th>
+                        <th>Nama Penerima</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+                        <th>Nama Kurir</th>
+                        <th>Email Kurir</th>
+                        <th>No Telp Kurir</th> <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,14 +28,14 @@ export default function PaketTable({ data, onEdit, onDelete }) {
                         data.map((item, index) => (
                             <tr key={item.id}>
                                 <td>{index + 1}</td>
-                                <td>{item.nama_paket}</td>
-                                <td>{item.no_resi}</td>
-                                <td>{item.nama_penerima}</td>
-                                <td>{item.no_hp_penerima}</td>
-                                <td>{item.alamat_penerima}</td>
-                                <td>{item.nama_pengirim}</td>
-                                <td>{item.no_hp_pengirim}</td>
-                                <td>{item.status}</td>
+                                <td>{item.paket.nama_pengirim}</td>
+                                <td>{item.paket.no_resi}</td>
+                                <td>{item.paket.alamat_penerima}</td>
+                                <td>{item.paket.nama_penerima}</td>
+                                <td>{item.paket.status}</td>
+                                <td>{item.kurir.fullname}</td>
+                                <td>{item.kurir.email}</td>
+                                <td>{item.kurir.no_telpon}</td>
                                 <td>
                                     <div className="btn-group" role="group">
                                         <button
@@ -48,7 +46,6 @@ export default function PaketTable({ data, onEdit, onDelete }) {
                                             <i className="bi bi-pencil"></i>{" "}
                                             Edit
                                         </button>
-
                                         {onDelete && (
                                             <button
                                                 onClick={() =>
@@ -71,3 +68,5 @@ export default function PaketTable({ data, onEdit, onDelete }) {
         </div>
     );
 }
+
+export default PengirimanTable;

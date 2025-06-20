@@ -1,7 +1,7 @@
 // resources/js/paket/FormPaket.jsx
 import React, { useState, useEffect } from "react";
 import { createPaket, updatePaket } from "./paketService";
-export default function FormPaket({ initialData, onSuccess, onCancel }) {
+function FormPaket({ initialData, onSuccess, onCancel }) {
     const [form, setForm] = useState({
         nama_paket: "",
         nama_pengirim: "",
@@ -179,10 +179,12 @@ export default function FormPaket({ initialData, onSuccess, onCancel }) {
                     {loading
                         ? "Menyimpan..."
                         : initialData
-                        ? "Update"
-                        : "Tambah"}
+                          ? "Update"
+                          : "Tambah"}
                 </button>
             </div>
         </form>
     );
 }
+
+export default FormPaket;

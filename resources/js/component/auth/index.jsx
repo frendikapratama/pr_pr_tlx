@@ -3,7 +3,7 @@ import FormUsers from "./form";
 import Modal from "../Modal";
 import { fetchUsers, deleteUsers } from "./authService";
 import UsersTable from "./UsersTable";
-
+import { PageContainer } from "@toolpad/core";
 export const AuthList = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -71,37 +71,39 @@ export const AuthList = () => {
         );
     }
     return (
-        <div className="container-fluid mt-4">
-            <div className="card">
-                <div className="card-header d-flex justify-content-between align-items-center">
-                    <h2 className="card-title mb-0">
-                        <i className="bi bi-box-seam"></i> Daftar users
-                    </h2>
-                    <button onClick={handleAdd} className="btn btn-success">
-                        <i className="bi bi-plus-circle"></i> Tambah User
-                    </button>
-                </div>
+        <PageContainer>
+            <div className="container-fluid mt-4">
+                <div className="card">
+                    <div className="card-header d-flex justify-content-between align-items-center">
+                        <h2 className="card-title mb-0">
+                            <i className="bi bi-box-seam"></i> Daftar users
+                        </h2>
+                        <button onClick={handleAdd} className="btn btn-success">
+                            <i className="bi bi-plus-circle"></i> Tambah User
+                        </button>
+                    </div>
 
-                <div className="card-body">
-                    <UsersTable
-                        data={users}
-                        onEdit={handleEdit}
-                        onDelete={handleDelete}
-                    />
+                    <div className="card-body">
+                        <UsersTable
+                            data={users}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
+                        />
+                    </div>
                 </div>
+                <Modal
+                    isOpen={modalOpen}
+                    onClose={handleModalClose}
+                    title={editData ? "Edit User" : "Tambah User"}
+                    size="xl"
+                >
+                    <FormUsers
+                        initialData={editData}
+                        onSuccess={handleFormSuccess}
+                        onCancel={handleModalClose}
+                    />
+                </Modal>
             </div>
-            <Modal
-                isOpen={modalOpen}
-                onClose={handleModalClose}
-                title={editData ? "Edit User" : "Tambah User"}
-                size="xl"
-            >
-                <FormUsers
-                    initialData={editData}
-                    onSuccess={handleFormSuccess}
-                    onCancel={handleModalClose}
-                />
-            </Modal>
-        </div>
+        </PageContainer>
     );
 };
