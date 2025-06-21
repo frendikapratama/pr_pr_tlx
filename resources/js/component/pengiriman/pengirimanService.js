@@ -9,7 +9,7 @@ export const createPengiriman = (data) => {
 };
 
 export const updatePengiriman = (id, data) => {
-    return api.put(`/pengiriman/${id}`, data, {
+    return api.post(`/pengiriman/${id}`, data, {
         headers: {
             "Content-Type": "multipart/form-data",
         },

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Paket;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class PaketController extends Controller
 {

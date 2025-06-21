@@ -1,7 +1,7 @@
 import api from "../../axios";
 
 export const fetchUsers = () => {
-    return api.get("/user");
+    return api.get("/users");
 };
 
 export const createUsers = (data) => {

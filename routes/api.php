@@ -17,16 +17,17 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/pengiriman', [PengirimanController::class, 'index']);
     Route::post('/pengiriman', [PengirimanController::class, 'store']);
-    Route::put('/pengiriman/{id}', [PengirimanController::class, 'update']);
+    Route::post('/pengiriman/{id}', [PengirimanController::class, 'update']);
     Route::delete('/pengiriman/{id}', [PengirimanController::class, 'destroy']);
 
     Route::get('/users', [AuthController::class, 'index']);
     Route::post('/user', [AuthController::class, 'store']);
     Route::put('/user/{id}', [AuthController::class, 'update']);
-    Route::delete('/user/{id}', [AuthController::class, 'destroy']);
-
+    Route::delete('/user/{id}', [AuthController::class, 'destroy']);    
+    
     Route::get('/me', function () {
         return auth()->user();
     });
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
