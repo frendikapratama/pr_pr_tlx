@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PengirimanController;
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/paket/search', [PaketController::class, 'searchByNoResi']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/paket', [PaketController::class, 'index']);

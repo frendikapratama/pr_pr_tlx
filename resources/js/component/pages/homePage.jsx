@@ -19,7 +19,7 @@ function HomePage() {
 
                     <div style={styles.navRight}>
                         <a
-                            href="/track"
+                            href="/lacak"
                             style={{
                                 ...styles.navButton,
                                 ...styles.trackButton,

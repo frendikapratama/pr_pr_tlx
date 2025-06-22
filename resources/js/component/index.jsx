@@ -21,6 +21,7 @@ import { AuthProvider } from "../context/AuthContext.jsx";
 import EditStatusPengiriman from "./pengiriman/EditStatusPengiriman.jsx";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import CekResi from "./pages/cekResi";
 
 function DashboardWrapper({ children }) {
     const { role, loading, logout } = useAuth();
@@ -52,7 +53,15 @@ function DashboardWrapper({ children }) {
     const navigation = getNavigationByRole(role, handleLogout);
 
     return (
-        <AppProvider navigation={navigation} router={router} theme={demoTheme}>
+        <AppProvider
+            navigation={navigation}
+            router={router}
+            theme={demoTheme}
+            branding={{
+                logo: <img src="/logo.jpg" alt="Logo" style={{ height: 50 }} />,
+                title: "TLX",
+            }}
+        >
             <DashboardLayout>{children}</DashboardLayout>
         </AppProvider>
     );
@@ -102,6 +111,7 @@ function App() {
                         path="/pengiriman/:id/edit-status"
                         element={<EditStatusPengiriman />}
                     />
+                    <Route path="/lacak" element={<CekResi />} />
                 </Routes>
             </Router>
         </AuthProvider>

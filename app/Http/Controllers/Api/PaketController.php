@@ -13,7 +13,7 @@ class PaketController extends Controller
 {
     public function __construct()
 {
-    $this->middleware('auth:sanctum');
+        $this->middleware('auth:sanctum')->except('searchByNoResi');
 }
 
 
@@ -148,6 +148,36 @@ class PaketController extends Controller
             'message' => 'Paket deleted successfully',
         ]);
     }
+
+    public function searchByNoResi(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'no_resi' => 'required|string',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Validation error',
+            'errors' => $validator->errors(),
+        ], 422);
+    }
+
+    $paket = Paket::where('no_resi', $request->no_resi)->first();
+
+    if (!$paket) {
+        return response()->json([
+            'status' => false,
+            'message' => 'No Resi not found',
+        ], 404);
+    }
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Paket found',
+        'paket' => $paket,
+    ]);
+}
 
 
 }

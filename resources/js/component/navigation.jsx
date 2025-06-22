@@ -8,10 +8,6 @@ import LogoutIcon from "@mui/icons-material/Logout";
 export const getNavigationByRole = (role) => {
     const baseMenu = [
         {
-            kind: "header",
-            title: "Main items",
-        },
-        {
             segment: "dashboard",
             title: "Dashboard",
             icon: <DashboardIcon />,
